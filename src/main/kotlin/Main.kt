@@ -37,17 +37,15 @@ fun main() {
             line.matches(Regex("^(GET|POST|PUT|PATCH|DELETE) .*")) -> {
                 val parts = line.split(" ", limit = 2)
                 method = parts[0]
-                url = parts[1]
-                variables.forEach { (name, value) -> url.replace("{{${name}}}", value) }
+                url = parts[1].substitute(variables)
                 parsingHeaders = true
             }
             // Headers
             parsingHeaders && line.isNotBlank() -> {
                 try {
-                    val (key, value) = line.split(":", limit = 2)
-                    headers[key.trim()] = value.trim()
+                    val (headerName, headerValue) = line.split(":", limit = 2)
+                    headers[headerName.trim()] = headerValue.substitute(variables).trim()
                 } catch (e: Exception) {
-                    // not a valid header → assume start of body
                     parsingHeaders = false
                     parsingBody = true
                     bodyBuilder.appendLine(line)
@@ -83,3 +81,8 @@ fun main() {
     println("Status: ${response.code}")
     println("Body: ${response.body}")
 }
+
+fun String.substitute(vars: Map<String, String>): String =
+    vars.entries.fold(this) { acc, (name, value) ->
+        acc.replace("{{${name}}}", value)
+    }

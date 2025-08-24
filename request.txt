@@ -1,6 +1,8 @@
-$cartId = d8c3d96a-577f-4d50-98e1-4252c9a74412
+$token = eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ4eEB4eC54IiwibmFtZSI6IlJhbmR5Iiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NTYwNDU0ODAsImV4cCI6MTc1NjA0NTc4MH0.I-EAhrIICeFdGJ22Dd08PNvkguCdbY71osUILAa9uvDuhu-uD21RpzJ_DYhO5negngyjJTRelAbM_hN-ArpXpg
+$cartId = b2ebd9e2-7b56-4008-b00a-8bda80ef3575
 POST http://localhost:8080/carts/{{cartId}}/items
 Content-Type: application/json
+Authorization: Bearer {{token}}
 {
     "productId": 2
 }
