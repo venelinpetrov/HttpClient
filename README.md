@@ -1,0 +1,12 @@
+# HttpClient in Kotlin
+
+Small http client that executes a request when given a text file with the following format:
+
+```text
+$cartId = d8c3d96a-577f-4d50-98e1-4252c9a74412
+POST http://localhost:8080/carts/{{cartId}}/items
+Content-Type: application/json
+{
+    "productId": 2
+}
+```
